@@ -9,11 +9,3 @@ services:
       - 5432:5432
     environment: 
       POSTGRES_PASSWORD: 123456
-
-  redis:
-    container_name: redis
-    image: 'bitnami/redis:latest'
-    ports:
-      - 6379:6379
-    environment:
-      - REDIS_PASSWORD=password123
