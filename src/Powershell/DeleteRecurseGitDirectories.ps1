@@ -1,7 +1,10 @@
-# $ubicacionDirectorios = Get-ChildItem $rutaArchivosToChange -Recurse -Directory | Where-Object Name -match '^[0-9][^0-9]'
-# foreach ($directorio in $ubicacionDirectorios) {
+$ubicacionDirectorios = Get-ChildItem . -Recurse -Directory | Select-Object FullName
 
-#     Move-Item ($directorio.FullName) ($directorio.FullName.Replace($directorio.Name, '0' + $directorio.Name))
+foreach ($directorio in $ubicacionDirectorios) {
+    $directory = Get-ChildItem -Hidden $directorio.FullName -Filter ".git" | Select-Object Name, FullName
 
-#     Write-Host "Directorio" ($directorio.FullName) "modificado"
-# }
+    if ($directory.Name -eq ".git") {
+        Write-Host $directory.FullName
+        Remove-Item -Recurse -Force $directory.FullName
+    }
+}
