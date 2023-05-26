@@ -17,3 +17,7 @@ services:
       resources:
         limits:
           memory: 1g
+    volumes:
+      - elastic_data:/usr/share/elasticsearch/data
+volumes:
+  elastic_data:

@@ -9,3 +9,7 @@ services:
       - 5432:5432
     environment: 
       POSTGRES_PASSWORD: 123456
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+volumes:
+  postgresql_data:
