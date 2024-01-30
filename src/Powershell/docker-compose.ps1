@@ -4,51 +4,67 @@ param (
     [string]$action,
 
     [Parameter(Mandatory = $true)]
-    [ValidateSet("local", "dev", "pro", "pre")]
+    [ValidateSet("local", "test")]
     [string]$environment,
 
     [Parameter(Mandatory = $false)]
     [ValidateSet("v")]
-    [string]$removeVolumes,
-
-    [Parameter(Mandatory = $false)]
-    [string]$manualEnvPath
+    [string]$removeVolumes
 )
 
-$commadDockerComposeToExecute = "docker compose "
-$dockerComposeDotnetAppCommand = "docker-compose.app.yml "
-$dockerComposeGrafanaCommand = "docker-compose.grafana.yml "
-$dockerComposeFile = "docker-compose.yml "
-$enviromentFile = ".env.$environment "
+$composeToExecuteAlways = @(
+    "docker-compose.mongo.yml",
+    "docker-compose.openTelemetry.yml"
+);
 
-# Agregamos el parametro -f donde estan los servicios que usa la app para ejecutar en docker
-$commadDockerComposeToExecute += "-f " + $dockerComposeFile + " "
 
-if ($manualEnvPath -ne "") {
-    $enviromentFile = "$manualEnvPath "
+$composeToExecuteOnTest = @(
+    "docker-compose.app.yml"
+);
+
+$composeToExecuteOnLocal = @(
+    "docker-compose.grafana.yml"
+);
+
+$commadDockerComposeToExecute = "docker compose"
+$enviromentFile = ".env.$environment"
+
+
+
+$commadDockerComposeToExecute += " --env-file $enviromentFile"
+foreach ($dockerComposeFile in $composeToExecuteAlways) {
+    $commadDockerComposeToExecute += " -f $dockerComposeFile";
 }
-$commadDockerComposeToExecute += "--env-file " + $enviromentFile
+
 
 if ($environment -eq "local") {
-    $commadDockerComposeToExecute += "-f $dockerComposeGrafanaCommand "
+    foreach ($dockerComposeFile in $composeToExecuteOnLocal) {
+        $commadDockerComposeToExecute += " -f $dockerComposeFile";
+    }
 }
-elseif ($environment -eq "pro" -or $environment -eq "pre" -or $environment -eq "dev") {
+
+if ($environment -eq "test") {
+    foreach ($dockerComposeFile in $composeToExecuteOnTest) {
+        $commadDockerComposeToExecute += " -f $dockerComposeFile";
+    }
+
     if ($action -eq "up") {
-        $buildExec = "docker compose -f $dockerComposeDotnetAppCommand -f $dockerComposeFile --env-file $enviromentFile build" 
+        $buildExec = "$commadDockerComposeToExecute build" 
         Write-Output $buildExec
         Invoke-Expression $buildExec
     }
-
-    $commadDockerComposeToExecute += "-f " + $dockerComposeDotnetAppCommand + " "
 }
 
 if ($action -eq "up") {
-    $commadDockerComposeToExecute += "up -d "
+    $commadDockerComposeToExecute += " up -d"
 
 }
 elseif ($action -eq "down") {
-    $commadDockerComposeToExecute += "down "
-    $commadDockerComposeToExecute += $removeVolumes -eq "v" ? "-v " : ""
+    $commadDockerComposeToExecute += " down"
+
+    if ($removeVolumes -eq "v") {
+        $commadDockerComposeToExecute += " -v"
+    }
 
 }
 

@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  mongodb_apuntesnet:
-    container_name: mongodb_apuntesnet
+  mongodb:
+    container_name: mongodb
     image: mongo
     restart: always
     ports:

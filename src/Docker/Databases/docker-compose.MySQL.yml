@@ -1,16 +1,13 @@
 version: '3.8'
 
 services:
-  mysql:
-    container_name: mysql
-    image: mysql:latest
-    ports: 
-      - 3306:3306
-    environment: 
-      MYSQL_DATABASE: 'Nombre base de datos'
-      MYSQL_ROOT_PASSWORD: '123456'
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: example
     volumes:
-      - ./.docker/MySqlDatabaseInit/initMysql.sql:/docker-entrypoint-initdb.d/init.sql
-      - mysql_data:/var/lib/mysql
+      - ./initDatabase.sql:/docker-entrypoint-initdb.d/init.sql
+      - mariabdb_data:/var/lib/mysql
 volumes:
-  mysql_data:
+  mariabdb_data:
