@@ -1,0 +1,225 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "escape",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "!editorTextFocus"
+    },
+    {
+        "key": "cmd+E",
+        "command": "workbench.action.showAllEditorsByMostRecentlyUsed",
+    },
+    {
+        "key": "cmd+1",
+        "command": "workbench.files.action.focusFilesExplorer",
+    },
+    {
+        "key": "cmd+1",
+        "command": "workbench.action.closeSidebar",
+        "when": "explorerViewletVisible"
+    },
+    {
+        "key": "cmd+2",
+        "command": "workbench.action.toggleAuxiliaryBar",
+    },
+    {
+        "key": "cmd+3",
+        "command": "workbench.action.togglePanel",
+    },
+    {
+        "key": "cmd+4",
+        "command": "",
+    },
+    {
+        "key": "cmd+5",
+        "command": "workbench.action.toggleZenMode",
+    },
+    {
+        "key": "cmd+b",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.closePanel",
+                "workbench.action.closeSidebar",
+                "workbench.action.closeAuxiliaryBar",
+            ]
+        }
+    },
+    {
+        "key": "cmd+backspace",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "editor.action.deleteLines",
+                "cursorUp",
+                "cursorLineEnd"
+            ],
+        },
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "home",
+        "command": "workbench.action.navigateBack",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "end",
+        "command": "workbench.action.navigateForward",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+t",
+        "command": "editor.action.refactor",
+        "when": "editorHasCodeActionsProvider && textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "csdevkit.rebuildSolution"
+    },
+    {
+        "key": "cmd+[IntlBackslash]",
+        "command": "solutionExplorer.focus",
+    },
+    {
+        "key": "cmd+[IntlBackslash]",
+        "command": "workbench.action.maximizeEditorHideSidebar",
+        "when": "solutionExplorer"
+    },
+    {
+        "key": "cmd+[Backslash]",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+alt+[Quote]",
+        "command": "editor.action.removeBrackets",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+alt+up",
+        "command": "editor.action.smartSelect.expand",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+alt+down",
+        "command": "editor.action.smartSelect.shrink",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+cmd+k",
+        "command": "-editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "cmd+k",
+        "command": "extension.conventionalCommits"
+    },
+    {
+        "key": "shift+cmd+g",
+        "command": "git-graph.view"
+    },
+    {
+        "key": "cmd+d",
+        "command": "editor.action.addSelectionToNextFindMatch",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+h",
+        "command": "workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
+        "key": "ctrl+shift+g",
+        "command": "-workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
+        "key": "shift+cmd+w",
+        "command": "workbench.action.openWorkspaceSettingsFile"
+    },
+    {
+        "key": "ctrl+shift+f5",
+        "command": "csdevkit.debug.noDebugFileLaunch"
+    },
+    {
+        "key": "ctrl+f5",
+        "command": "csdevkit.debug.fileLaunch"
+    },
+    {
+        "key": "cmd+backspace",
+        "command": "csdevkit.deleteItem",
+        "when": "focusedView == 'solutionExplorer' && selectedSolutionExplorerNodeType == 'File' || focusedView == 'solutionExplorer' && selectedSolutionExplorerNodeType == 'Folder'"
+    },
+    {
+        "key": "delete",
+        "command": "-csdevkit.deleteItem",
+        "when": "focusedView == 'solutionExplorer' && selectedSolutionExplorerNodeType == 'File' || focusedView == 'solutionExplorer' && selectedSolutionExplorerNodeType == 'Folder'"
+    },
+    {
+        "key": "cmd+backspace",
+        "command": "csdevkit.removeItem",
+        "when": "focusedView == 'solutionExplorer' && selectedSolutionExplorerNodeType == 'LinkedFile'"
+    },
+    {
+        "key": "delete",
+        "command": "-csdevkit.removeItem",
+        "when": "focusedView == 'solutionExplorer' && selectedSolutionExplorerNodeType == 'LinkedFile'"
+    },
+    {
+        "key": "cmd+backspace",
+        "command": "csdevkit.removeProject",
+        "when": "focusedView == 'solutionExplorer' && selectedSolutionExplorerNodeType == 'Project'"
+    },
+    {
+        "key": "delete",
+        "command": "-csdevkit.removeProject",
+        "when": "focusedView == 'solutionExplorer' && selectedSolutionExplorerNodeType == 'Project'"
+    },
+    {
+        "key": "cmd+backspace",
+        "command": "csdevkit.removeSolutionFolder",
+        "when": "focusedView == 'solutionExplorer' && selectedSolutionExplorerNodeType == 'SolutionFolder'"
+    },
+    {
+        "key": "delete",
+        "command": "-csdevkit.removeSolutionFolder",
+        "when": "focusedView == 'solutionExplorer' && selectedSolutionExplorerNodeType == 'SolutionFolder'"
+    },
+    {
+        "key": "cmd+g",
+        "command": "-editor.action.nextMatchFindAction",
+        "when": "editorFocus"
+    },
+    {
+        "key": "cmd+g",
+        "command": "workbench.action.gotoLine"
+    },
+    {
+        "key": "ctrl+g",
+        "command": "-workbench.action.gotoLine"
+    },
+    {
+        "key": "shift+cmd+t",
+        "command": "workbench.view.testing.focus"
+    },
+    {
+        "key": "cmd+r cmd+t",
+        "command": "testing.runAtCursor",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+cmd+[Comma] c",
+        "command": "-testing.runAtCursor",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+d cmd+t",
+        "command": "testing.debugAtCursor",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+cmd+[Comma] cmd+c",
+        "command": "-testing.debugAtCursor",
+        "when": "editorTextFocus"
+    }
+]

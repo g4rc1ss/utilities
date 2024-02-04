@@ -1,0 +1,96 @@
+{
+    "editor.minimap.autohide": true,
+    "editor.fontSize": 12,
+    "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+    "editor.rulers": [],
+    "editor.wordWrap": "off",
+    "search.useIgnoreFiles": true,
+    "search.useGlobalIgnoreFiles": true,
+    "explorer.excludeGitIgnore": true,
+    "files.eol": "\n",
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "files.autoSave": "afterDelay",
+    //appareance
+    "editor.lineHeight": 1.7,
+    "editor.dragAndDrop": false,
+    "explorer.compactFolders": false,
+    "workbench.colorTheme": "Default Dark Modern",
+    "workbench.editor.showTabs": "single",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.smoothScrolling": true,
+    "workbench.tree.indent": 10,
+    "workbench.list.horizontalScrolling": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false,
+    "editor.codeActionsOnSave": {
+        "source.addMissingImports": "always",
+        "source.organizeImports": "always",
+        "source.fixAll": "always"
+    },
+    "[csharp]": {
+        "editor.maxTokenizationLineLength": 2500,
+        "editor.inlineSuggest.suppressSuggestions": false
+    },
+    "[typescript]": {
+        "editor.formatOnSave": false,
+        "editor.codeActionsOnSave": [
+            "source.addMissingImports",
+            "source.fixAll.eslint"
+        ]
+    },
+    //extensions
+    "focus.opacity": "0.7",
+    "focus.highlightRange": "block",
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "git.openRepositoryInParentFolders": "always",
+    "git.autofetch": true,
+    "nugetpackagemanagergui.packageSources": [
+        {
+            "sourceName": "Nuget",
+            "sourceType": "server",
+            "preRelease": true,
+            "searchUrl": "https://azuresearch-usnc.nuget.org/query",
+            "packageVersionsUrl": "https://api.nuget.org/v3-flatcontainer/{{packageName}}/index.json",
+            "packageUrl": "https://www.nuget.org/packages/{{packageName}}/{{version}}",
+            "authorization": {
+                "authType": "none"
+            }
+        },
+        {
+            "sourceName": "Nuget Comercia",
+            "sourceType": "server",
+            "preRelease": true,
+            "searchUrl": "https://pkgs.dev.azure.com/comerciagp/_packaging/CGP.Switch.Core.Feed/nuget/v3/query2",
+            "packageVersionsUrl": "https://pkgs.dev.azure.com/comerciagp/_packaging/CGP.Switch.Core.Feed/nuget/v3/flat2/{{packageName}}/index.json",
+            "packageUrl": "https://dev.azure.com/comerciagp/Comercia2.0/_artifacts/feed/CGP.Switch.Core.Feed/NuGet/{{packageName}}/overview/{{version}}",
+            "authorization": {
+                "authType": "basicAuth",
+                "username": "U9JZ2327@icomerciagp.com",
+                "password": "qwickdyjxuvd2c7frwjsfv4zgtfmyvjmzbbzmehvujgyzpypa6yq"
+            }
+        }
+    ],
+    "workbench.iconTheme": "vscode-icons",
+    "csharp.experimental.debug.hotReload": true,
+    "csharp.debug.hotReloadOnSave": true,
+    "csharp.debug.justMyCode": true,
+    "csharp.debug.symbolOptions.searchNuGetOrgSymbolServer": true,
+    "csharp.format.enable": true,
+    "dotnet.autoDetect": "on",
+    "dotnet.inlayHints.suppressInlayHintsForParametersThatDifferOnlyBySuffix": true,
+    "omnisharp.enableDecompilationSupport": true,
+    "azureFunctions.projectLanguage": "C#",
+    "powershell.promptToUpdatePowerShell": false,
+    "editor.accessibilitySupport": "off",
+    "editor.renderWhitespace": "none",
+    "workbench.editorAssociations": {
+        "git-rebase-todo": "default"
+    },
+    "diffEditor.ignoreTrimWhitespace": false,
+    "workbench.activityBar.location": "top",
+    "git-graph.repository.fetchAndPrune": true,
+    "git-graph.repository.fetchAndPruneTags": true
+}
