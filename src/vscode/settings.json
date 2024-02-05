@@ -11,6 +11,7 @@
     "explorer.confirmDragAndDrop": false,
     "explorer.confirmDelete": false,
     "files.autoSave": "afterDelay",
+    "keyboard.mapAltGrToCtrlAlt": true,
     //appareance
     "editor.lineHeight": 1.7,
     "editor.dragAndDrop": false,
