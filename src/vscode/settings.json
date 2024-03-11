@@ -7,6 +7,8 @@
     "search.useIgnoreFiles": true,
     "search.useGlobalIgnoreFiles": true,
     "explorer.excludeGitIgnore": true,
+    // Seguir los archivos abiertos en el explorador
+    "explorer.autoReveal": true,
     "files.eol": "\n",
     "explorer.confirmDragAndDrop": false,
     "explorer.confirmDelete": false,
@@ -16,14 +18,13 @@
     "editor.lineHeight": 1.7,
     "editor.dragAndDrop": false,
     "explorer.compactFolders": false,
-    "workbench.colorTheme": "Default Dark Modern",
     "workbench.editor.showTabs": "single",
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.smoothScrolling": true,
     "workbench.tree.indent": 10,
     "workbench.list.horizontalScrolling": true,
     "editor.bracketPairColorization.enabled": true,
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "editor.formatOnPaste": false,
     "editor.codeActionsOnSave": {
         "source.addMissingImports": "always",
@@ -59,26 +60,13 @@
             "authorization": {
                 "authType": "none"
             }
-        },
-        {
-            "sourceName": "Nuget Comercia",
-            "sourceType": "server",
-            "preRelease": true,
-            "searchUrl": "https://pkgs.dev.azure.com/comerciagp/_packaging/CGP.Switch.Core.Feed/nuget/v3/query2",
-            "packageVersionsUrl": "https://pkgs.dev.azure.com/comerciagp/_packaging/CGP.Switch.Core.Feed/nuget/v3/flat2/{{packageName}}/index.json",
-            "packageUrl": "https://dev.azure.com/comerciagp/Comercia2.0/_artifacts/feed/CGP.Switch.Core.Feed/NuGet/{{packageName}}/overview/{{version}}",
-            "authorization": {
-                "authType": "basicAuth",
-                "username": "U9JZ2327@icomerciagp.com",
-                "password": "qwickdyjxuvd2c7frwjsfv4zgtfmyvjmzbbzmehvujgyzpypa6yq"
-            }
         }
     ],
     "workbench.iconTheme": "vscode-icons",
     "csharp.experimental.debug.hotReload": true,
     "csharp.debug.hotReloadOnSave": true,
     "csharp.debug.justMyCode": true,
-    "csharp.debug.symbolOptions.searchNuGetOrgSymbolServer": true,
+    "csharp.debug.symbolOptions.searchNuGetOrgSymbolServer": false,
     "csharp.format.enable": true,
     "dotnet.autoDetect": "on",
     "dotnet.inlayHints.suppressInlayHintsForParametersThatDifferOnlyBySuffix": true,
@@ -93,5 +81,27 @@
     "diffEditor.ignoreTrimWhitespace": false,
     "workbench.activityBar.location": "top",
     "git-graph.repository.fetchAndPrune": true,
-    "git-graph.repository.fetchAndPruneTags": true
+    "git-graph.repository.fetchAndPruneTags": true,
+    "settingsSync.ignoredExtensions": [],
+    "settingsSync.ignoredSettings": [],
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.stickyScroll.enabled": true,
+    "editor.cursorBlinking": "smooth",
+    "editor.linkedEditing": true,
+    "dotnet.inlayHints.enableInlayHintsForParameters": true,
+    "dotnet.inlayHints.enableInlayHintsForIndexerParameters": true,
+    "dotnet.inlayHints.enableInlayHintsForObjectCreationParameters": true,
+    "dotnet.inlayHints.enableInlayHintsForLiteralParameters": true,
+    "dotnet.inlayHints.suppressInlayHintsForParametersThatMatchArgumentName": false,
+    "dotnet.inlayHints.suppressInlayHintsForParametersThatMatchMethodIntent": false,
+    "csharp.inlayHints.enableInlayHintsForImplicitObjectCreation": false,
+    "csharp.inlayHints.enableInlayHintsForImplicitVariableTypes": true,
+    "csharp.inlayHints.enableInlayHintsForLambdaParameterTypes": true,
+    "csharp.inlayHints.enableInlayHintsForTypes": true,
+    "azureResourceGroups.selectedSubscriptions": [],
+    "files.associations": {
+        "*.ruleset": "xml"
+    },
+    "xml.codeLens.enabled": true,
+    "xml.format.maxLineWidth": 200,
 }
