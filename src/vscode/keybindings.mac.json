@@ -1,6 +1,16 @@
 // Place your key bindings in this file to override the defaults
 [
     {
+        "key": "alt+-",
+        "command": "workbench.action.navigateBack",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+shift+-",
+        "command": "workbench.action.navigateForward",
+        "when": "editorTextFocus"
+    },
+    {
         "key": "escape",
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "!editorTextFocus"
@@ -19,11 +29,11 @@
         "when": "explorerViewletVisible"
     },
     {
-        "key": "cmd+2",
+        "key": "cmd+3",
         "command": "workbench.action.toggleAuxiliaryBar",
     },
     {
-        "key": "cmd+3",
+        "key": "cmd+2",
         "command": "workbench.action.togglePanel",
     },
     {
@@ -56,16 +66,6 @@
             ],
         },
         "when": "textInputFocus && !editorReadonly"
-    },
-    {
-        "key": "home",
-        "command": "workbench.action.navigateBack",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "end",
-        "command": "workbench.action.navigateForward",
-        "when": "editorTextFocus"
     },
     {
         "key": "ctrl+t",
@@ -204,22 +204,31 @@
     },
     {
         "key": "cmd+r cmd+t",
-        "command": "testing.runAtCursor",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "shift+cmd+[Comma] c",
-        "command": "-testing.runAtCursor",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "cmd+d cmd+t",
         "command": "testing.debugAtCursor",
         "when": "editorTextFocus"
+    },
+        {
+        "key": "cmd+r cmd+.",
+        "command": "dotnet.restartServer",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "cmd+r cmd+r",
+        "command": "workbench.action.reloadWindow"
     },
     {
         "key": "shift+cmd+[Comma] cmd+c",
         "command": "-testing.debugAtCursor",
         "when": "editorTextFocus"
+    },
+        {
+        "key": "f4",
+        "command": "editor.debug.action.showDebugHover",
+        "when": "editorTextFocus && inDebugMode"
+    },
+    {
+        "key": "ctrl+k ctrl+i",
+        "command": "-editor.debug.action.showDebugHover",
+        "when": "editorTextFocus && inDebugMode"
     }
 ]
