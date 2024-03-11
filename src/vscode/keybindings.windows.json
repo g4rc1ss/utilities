@@ -1,12 +1,12 @@
 // Place your key bindings in this file to override the defaults
 [
     {
-        "key": "shift+alt+left",
+        "key": "alt+-",
         "command": "workbench.action.navigateBack",
         "when": "editorTextFocus"
     },
     {
-        "key": "shift+alt+right",
+        "key": "alt+shift+-",
         "command": "workbench.action.navigateForward",
         "when": "editorTextFocus"
     },
@@ -213,11 +213,6 @@
         "command": "workbench.view.testing.focus"
     },
     {
-        "key": "shift+ctrl+[Comma] c",
-        "command": "-testing.runAtCursor",
-        "when": "editorTextFocus"
-    },
-    {
         "key": "ctrl+r ctrl+t",
         "command": "testing.debugAtCursor",
         "when": "editorTextFocus"
@@ -235,5 +230,15 @@
         "key": "shift+ctrl+[Comma] ctrl+c",
         "command": "-testing.debugAtCursor",
         "when": "editorTextFocus"
+    },
+    {
+        "key": "f4",
+        "command": "editor.debug.action.showDebugHover",
+        "when": "editorTextFocus && inDebugMode"
+    },
+    {
+        "key": "ctrl+k ctrl+i",
+        "command": "-editor.debug.action.showDebugHover",
+        "when": "editorTextFocus && inDebugMode"
     }
 ]
