@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hostwebapi-service
+spec:
+  selector:
+    app: hostwebapi
+  ports:
+    - name: api-hostwebapi-port-http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    - name: api-hostwebapi-port-https
+      protocol: TCP
+      port: 443
+      targetPort: 443
+  type: LoadBalancer
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostwebapi-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hostwebapi
+  template:
+    metadata:
+      labels:
+        app: hostwebapi
+    spec:
+      containers:
+      - name: hostwebapi
+        image: asiergb/cleanarchitecture
+        ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
+        envFrom:
+        - configMapRef:
+            name: hostwebapi-configmap
+        - secretRef:
+            name: hostwebapi-secret
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+          requests:
+            cpu: 50m
+            memory: 200Mi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        volumeMounts:
+        - name: keysvolume
+          mountPath: /keysFolder
+      volumes:
+      - name: keysvolume
+        emptyDir: {}      
