@@ -1,0 +1,9 @@
+services:
+  dotnetapp:
+    image: /:latest
+    build:
+      context: ../src
+      dockerfile: dockerfile
+      # El multiStage no esta siempre disponible
+      # Indicamos que queremos compilar en ARM64 y en AMD64 con S.O Linux
+      platforms: [linux/amd64, linux/arm64] 
