@@ -1,0 +1,274 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rabbitmqdatapv
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data" #path de archivos ubicados en el disco del nodo
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rabbitmqdatapvc
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rabbitmq-configmap
+data:
+  rabbitmq.conf: |
+    # example file from https://github.com/rabbitmq/rabbitmq-server/blob/master/deps/rabbit/docs/rabbitmq.conf.example
+    
+    loopback_users.DistributionAdmin = false
+    default_vhost = /
+    default_user = DistributionAdmin
+    default_pass = DistributionPassword
+    management.load_definitions = /etc/rabbitmq/definitions.json
+  
+  definitions.json: |
+    {
+      "rabbit_version": "3.13.6",
+      "rabbitmq_version": "3.13.6",
+      "product_name": "RabbitMQ",
+      "product_version": "3.13.6",
+      "users": [
+          {
+              "name": "DistributionAdmin",
+              "password_hash": "RAaVADhIjvPs8Ay7tkcWRhIxd+mwWvV7fbDtpKStx6EA2BxO",
+              "hashing_algorithm": "rabbit_password_hashing_sha256",
+              "tags": [
+                  "administrator"
+              ],
+              "limits": {}
+          }
+      ],
+      "vhosts": [
+          {
+              "name": "/",
+              "description": "",
+              "tags": [],
+              "metadata": {
+                  "description": "",
+                  "tags": []
+              }
+          }
+      ],
+      "permissions": [
+          {
+              "user": "DistributionAdmin",
+              "vhost": "/",
+              "configure": ".*",
+              "write": ".*",
+              "read": ".*"
+          }
+      ],
+      "topic_permissions": [],
+      "parameters": [],
+      "global_parameters": [
+          {
+              "name": "internal_cluster_id",
+              "value": "rabbitmq-cluster-id-ClprroI8uxkokUjRoOyYzw"
+          }
+      ],
+      "policies": [
+          {
+              "vhost": "/",
+              "name": "DLX",
+              "pattern": ".*",
+              "apply-to": "queues",
+              "definition": {
+                  "dead-letter-exchange": "dead-letter.exchange"
+              },
+              "priority": 0
+          }
+      ],
+      "queues": [
+          {
+              "name": "publisher",
+              "vhost": "/",
+              "durable": true,
+              "auto_delete": false,
+              "arguments": {
+                  "x-dead-letter-exchange": "dead-letter.exchange",
+                  "x-dead-letter-routing-key": "publisher.dead-letter",
+                  "x-message-ttl": 20000
+              }
+          },
+          {
+              "name": "publisher.dead-letter",
+              "vhost": "/",
+              "durable": true,
+              "auto_delete": false,
+              "arguments": {
+              }
+          },
+          {
+              "name": "subscription.weatherForecast",
+              "vhost": "/",
+              "durable": false,
+              "auto_delete": false,
+              "arguments": {
+                  "x-dead-letter-exchange": "dead-letter.exchange",
+                  "x-dead-letter-routing-key": "subscription.weatherForecast.dead-letter",
+                  "x-message-ttl": 20000
+              }
+          },
+          {
+              "name": "subscription.weatherForecast.dead_letter",
+              "vhost": "/",
+              "durable": false,
+              "auto_delete": false,
+              "arguments": {}
+          }
+      ],
+      "exchanges": [
+          {
+              "name": "dead-letter.exchange",
+              "vhost": "/",
+              "type": "direct",
+              "durable": true,
+              "auto_delete": false,
+              "internal": false,
+              "arguments": {}
+          },
+          {
+              "name": "subscription.exchange",
+              "vhost": "/",
+              "type": "topic",
+              "durable": true,
+              "auto_delete": true,
+              "internal": false,
+              "arguments": {}
+          }
+      ],
+      "bindings": [
+          {
+              "source": "subscription.exchange",
+              "vhost": "/",
+              "destination": "publisher",
+              "destination_type": "queue",
+              "routing_key": "#",
+              "arguments": {}
+          },
+          {
+              "source": "subscription.exchange",
+              "vhost": "/",
+              "destination": "subscription.weatherForecast",
+              "destination_type": "queue",
+              "routing_key": "weatherForecast.*",
+              "arguments": {}
+          },
+
+          {
+              "source": "dead-letter.exchange",
+              "vhost": "/",
+              "destination": "publisher.dead-letter",
+              "destination_type": "queue",
+              "routing_key": "publisher.dead-letter",
+              "arguments": {}
+          },
+          {
+              "source": "dead-letter.exchange",
+              "vhost": "/",
+              "destination": "subscription.weatherForecast.dead_letter",
+              "destination_type": "queue",
+              "routing_key": "subscription.weatherForecast.dead-letter",
+              "arguments": {}
+          }
+      ]
+    }
+  
+  enabled_plugins: |
+    [rabbitmq_prometheus, rabbitmq_amqp1_0, rabbitmq_management, rabbitmq_web_dispatch, rabbitmq_management_agent, rabbitmq_stomp].
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-service
+spec:
+  selector:
+    app: rabbitmq
+  ports:
+    - name: rabbitmq-port
+      protocol: TCP
+      port: 5672
+      targetPort: 5672
+      nodePort: 30005
+    - name: rabbitmq-gui-port
+      protocol: TCP
+      port: 15672
+      targetPort: 15672
+      nodePort: 30007
+  type: NodePort
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:management
+        ports:
+        - containerPort: 5672
+        - containerPort: 15672
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 600Mi
+          requests:
+            cpu: 50m
+            memory: 32Mi
+        livenessProbe:
+          exec:
+            command:
+              - rabbitmq-diagnostics 
+              - ping
+          initialDelaySeconds: 10
+          timeoutSeconds: 30
+        readinessProbe:
+          exec:
+            command:
+              # - rabbitmq-diagnostics -q ping | grep 'Ping succeeded' || exit 1
+              - rabbitmq-diagnostics 
+              - ping
+          initialDelaySeconds: 10
+          timeoutSeconds: 30
+          periodSeconds: 120
+        volumeMounts:
+        - name: rabbitmq-data
+          mountPath: /var/lib/rabbitmq
+        - name: rabbitmq-configuration
+          mountPath: /etc/rabbitmq
+      volumes:
+      - name: rabbitmq-data
+        persistentVolumeClaim:
+          claimName: rabbitmqdatapvc
+      - name: rabbitmq-configuration
+        configMap:
+          name: rabbitmq-configmap

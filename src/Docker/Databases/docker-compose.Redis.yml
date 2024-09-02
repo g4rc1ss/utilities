@@ -1,14 +1,94 @@
-version: '3.8'
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: redisdatapv
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data" #path de archivos ubicados en el disco del nodo
+---
 
-services:
-  redis:
-    container_name: redis
-    image: 'bitnami/redis:latest'
-    ports:
-      - 6379:6379
-    environment:
-      - REDIS_PASSWORD=password123
-    volumes:
-      - redis_data:/data
-volumes:
-  redis_data:
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redisdatapvc
+spec:
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+spec:
+  selector:
+    app: redis
+  ports:
+    - name: api-redis-port
+      protocol: TCP
+      port: 6379
+      targetPort: 6379
+      nodePort: 30002
+  type: NodePort
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redisdatabase
+        image: redis
+        ports:
+        - containerPort: 6379
+        envFrom:
+        - secretRef:
+            name: hostwebapi-secret
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 600Mi
+          requests:
+            cpu: 50m
+            memory: 32Mi
+        livenessProbe:
+          exec:
+            command:
+              - redis-cli
+              - ping
+          initialDelaySeconds: 10
+          timeoutSeconds: 30
+        readinessProbe:
+          exec:
+            command:
+              - redis-cli
+              - ping
+          initialDelaySeconds: 10
+          timeoutSeconds: 30
+          periodSeconds: 120
+        volumeMounts:
+        - name: redis-data-db
+          mountPath: /data
+      volumes:
+      - name: redis-data-db
+        persistentVolumeClaim:
+          claimName: redisdatapvc
