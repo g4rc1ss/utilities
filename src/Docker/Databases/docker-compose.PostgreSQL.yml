@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgresql:
     container_name: postgresql
@@ -8,8 +6,9 @@ services:
     ports: 
       - 5432:5432
     environment: 
-      POSTGRES_PASSWORD: 123456
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-123456}
     volumes:
       - postgresql_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 volumes:
   postgresql_data:
